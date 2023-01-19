@@ -13,15 +13,13 @@ namespace PEPools.Base
 		[SerializeField] [ReadOnly] private PrefabFactory factory;
 		[SerializeField] [ReadOnly] private ItemPool pool;
 
-		public PrefabPool(TItem prefab, Transform parent = null, IPoolCallback<TItem> callbackProvider = null,
+		public PrefabPool(TItem prefab, IPoolCallback<TItem> callbackProvider = null,
 			int initialCapacity = PoolConstants.DefaultBucketSize,
 			int initialMaxSize = PoolConstants.DefaultMaxSize)
 		{
-			factory = new PrefabFactory(prefab, callbackProvider, parent);
+			factory = new PrefabFactory(prefab, callbackProvider);
 			pool = new ItemPool(factory, factory, initialCapacity, maxSize: initialMaxSize);
 		}
-
-		public ref readonly Transform Parent => ref factory.Parent;
 		public int FreeCount => pool.FreeCount;
 		public int RentedCount => pool.RentedCount;
 		public int MaxCount => pool.MaxCount;
@@ -45,52 +43,40 @@ namespace PEPools.Base
 		[Serializable]
 		private sealed class PrefabFactory : IPoolFactory<TItem>, IPoolCallback<TItem>
 		{
-			[SerializeField] [ReadOnly] private Transform parent;
 			[SerializeField] [ReadOnly] private TItem prefab;
 			[SerializeField] [ReadOnly] private uint count = uint.MinValue;
 			private readonly IPoolCallback<TItem> callbackProvider;
 
-			public PrefabFactory(TItem prefab, IPoolCallback<TItem> callbackProvider, Transform parent)
+			public PrefabFactory(TItem prefab, IPoolCallback<TItem> callbackProvider)
 			{
 				this.prefab = prefab;
 				this.callbackProvider = callbackProvider;
-				this.parent = parent;
 			}
-
-			public ref readonly Transform Parent => ref parent;
 
 			void IPoolCallback<TItem>.OnItemDestroyed(in TItem item)
 			{
 				callbackProvider?.OnItemDestroyed(item);
-				Object.Destroy(item);
+				Object.Destroy(item.gameObject);
 			}
 
 			void IPoolCallback<TItem>.OnItemCreated(in TItem item)
 			{
-				item.enabled = false;
-				item.transform.SetParent(parent);
-				item.gameObject.SetActive(false);
 				callbackProvider?.OnItemCreated(item);
 			}
 
 			void IPoolCallback<TItem>.OnItemRented(in TItem item)
 			{
-				item.gameObject.SetActive(true);
-				item.enabled = true;
 				callbackProvider?.OnItemRented(item);
 			}
 
 			void IPoolCallback<TItem>.OnItemReleased(in TItem item)
 			{
-				item.enabled = false;
-				item.transform.SetParent(parent);
-				item.gameObject.SetActive(false);
 				callbackProvider?.OnItemReleased(item);
 			}
 
 			TItem IPoolFactory<TItem>.Create()
 			{
-				var item = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity, parent);
+				var item = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
 				item.name = $"{prefab.name} {++count}";
 				return item;
 			}
