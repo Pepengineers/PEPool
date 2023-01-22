@@ -1,0 +1,16 @@
+{
+  "name": "com.pepools",
+  "displayName": "PEPools",
+  "version": "1.0.0",
+  "unity": "2018.4",
+  "license": "MIT",
+  "description": "PEPool is an pool system for the Unity.",
+  "keywords": [
+    "pool",
+    "pepe",
+    "optimization"
+  ],
+  "category": "game tool",
+  "dependencies": {},
+  "samples": []
+}
