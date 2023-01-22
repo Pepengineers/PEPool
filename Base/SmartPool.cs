@@ -43,7 +43,7 @@ namespace PEPools.Base
 
 			var item = container[0];
 			callbacks?.OnItemRented(item);
-			container.SmartRemove(0);
+			container.FastRemove(0);
 			return item;
 		}
 
