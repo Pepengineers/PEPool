@@ -17,10 +17,10 @@ namespace PEPools.Base
 			pool = new SmartPool<TItem>(this, this);
 		}
 
-		public Action<TItem> ItemCreated { get; } = null;
-		public Action<TItem> ItemRented { get; } = null;
-		public Action<TItem> ItemReleased { get; } = null;
-		public Action<TItem> ItemDestroyed { get; } = null;
+		public Action<TItem> ItemCreated { get; set; } = null;
+		public Action<TItem> ItemRented { get; set; } = null;
+		public Action<TItem> ItemReleased { get; set; } = null;
+		public Action<TItem> ItemDestroyed { get; set; } = null;
 
 		public int FreeCount => pool.FreeCount;
 		public int RentedCount => pool.RentedCount;
