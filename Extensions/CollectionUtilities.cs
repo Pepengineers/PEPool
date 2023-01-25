@@ -9,7 +9,7 @@ namespace PEPools.Extensions
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void FastRemove<T>(this IList<T> list, int index)
 		{
-			if (index < 0) 
+			if (index < 0)
 				throw new ArgumentOutOfRangeException();
 			var lastIndex = list.Count - 1;
 			if (index > lastIndex)

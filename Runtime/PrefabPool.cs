@@ -20,6 +20,7 @@ namespace PEPools.Runtime
 			factory = new PrefabFactory(prefab, callbackProvider);
 			pool = new ItemPool(factory, factory, initialCapacity, maxSize: initialMaxSize);
 		}
+
 		public int FreeCount => pool.FreeCount;
 		public int RentedCount => pool.RentedCount;
 		public int MaxCount => pool.MaxCount;
