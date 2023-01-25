@@ -5,7 +5,7 @@ using PEPools.Settings;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace PEPools.Base
+namespace PEPools.Runtime
 {
 	[Serializable]
 	public class PrefabPool<TItem> : IPool<TItem> where TItem : Behaviour

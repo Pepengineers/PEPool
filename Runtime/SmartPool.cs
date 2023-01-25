@@ -6,7 +6,7 @@ using PEPools.Interfaces;
 using PEPools.Settings;
 using UnityEngine;
 
-namespace PEPools.Base
+namespace PEPools.Runtime
 {
 	[Serializable]
 	public class SmartPool<T> : IPool<T> where T : class

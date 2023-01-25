@@ -2,7 +2,7 @@
 using PEPools.Interfaces;
 using PEPools.Settings;
 
-namespace PEPools.Base
+namespace PEPools.Runtime
 {
 	public class SimplePool<TItem> : IPool<TItem>, IPoolCallback<TItem>, IPoolFactory<TItem> where TItem : class
 	{

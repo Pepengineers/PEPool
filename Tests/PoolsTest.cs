@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
-using PEPools.Base;
+using PEPools.Runtime;
 
 namespace PEPools.Tests
 {
