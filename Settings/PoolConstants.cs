@@ -1,4 +1,4 @@
-namespace PEPools.Settings
+namespace PEPEngineers.PEPools.Settings
 {
 	public static class PoolConstants
 	{

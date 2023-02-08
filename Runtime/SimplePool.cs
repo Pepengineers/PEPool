@@ -1,8 +1,8 @@
 ﻿using System;
-using PEPools.Interfaces;
-using PEPools.Settings;
+using PEPEngineers.PEPools.Interfaces;
+using PEPEngineers.PEPools.Settings;
 
-namespace PEPools.Runtime
+namespace PEPEngineers.PEPools.Runtime
 {
 	public class SimplePool<TItem> : IPool<TItem>, IPoolCallback<TItem>, IPoolFactory<TItem> where TItem : class
 	{

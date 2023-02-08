@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using PEPools.Attributes;
-using PEPools.Extensions;
-using PEPools.Interfaces;
-using PEPools.Settings;
+using PEPEngineers.PEPools.Attributes;
+using PEPEngineers.PEPools.Extensions;
+using PEPEngineers.PEPools.Interfaces;
+using PEPEngineers.PEPools.Settings;
 using UnityEngine;
 
-namespace PEPools.Runtime
+namespace PEPEngineers.PEPools.Runtime
 {
 	[Serializable]
 	public class SmartPool<T> : IPool<T> where T : class

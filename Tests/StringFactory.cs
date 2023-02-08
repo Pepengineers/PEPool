@@ -1,7 +1,7 @@
 using System;
-using PEPools.Interfaces;
+using PEPEngineers.PEPools.Interfaces;
 
-namespace PEPools.Tests
+namespace PEPEngineers.PEPools.Tests
 {
 	internal class StringFactory : IPoolFactory<string>, IPoolCallback<string>
 	{

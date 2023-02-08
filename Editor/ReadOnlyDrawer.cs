@@ -1,8 +1,8 @@
-﻿using PEPools.Attributes;
+﻿using PEPEngineers.PEPools.Attributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace PEPools.Editor
+namespace PEPEngineers.PEPools.Editor
 {
 	/// <summary>
 	///     This class contain custom drawer for ReadOnly attribute.

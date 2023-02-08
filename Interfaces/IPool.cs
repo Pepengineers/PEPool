@@ -1,4 +1,4 @@
-namespace PEPools.Interfaces
+namespace PEPEngineers.PEPools.Interfaces
 {
 	public interface IPool<T> : IReadOnlyPool<T> where T : class
 	{

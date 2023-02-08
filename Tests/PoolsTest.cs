@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using NUnit.Framework;
-using PEPools.Runtime;
+using PEPEngineers.PEPools.Runtime;
 
-namespace PEPools.Tests
+namespace PEPEngineers.PEPools.Tests
 {
 	internal sealed class PoolsTest
 	{

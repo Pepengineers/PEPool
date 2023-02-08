@@ -1,11 +1,11 @@
 using System;
-using PEPools.Attributes;
-using PEPools.Interfaces;
-using PEPools.Settings;
+using PEPEngineers.PEPools.Attributes;
+using PEPEngineers.PEPools.Interfaces;
+using PEPEngineers.PEPools.Settings;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace PEPools.Runtime
+namespace PEPEngineers.PEPools.Runtime
 {
 	[Serializable]
 	public class PrefabPool<TItem> : IPool<TItem> where TItem : Behaviour

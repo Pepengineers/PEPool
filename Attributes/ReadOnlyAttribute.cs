@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PEPools.Attributes
+namespace PEPEngineers.PEPools.Attributes
 {
 	public class ReadOnlyAttribute : PropertyAttribute
 	{

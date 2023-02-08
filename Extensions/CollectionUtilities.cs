@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace PEPools.Extensions
+namespace PEPEngineers.PEPools.Extensions
 {
 	internal static class CollectionUtilities
 	{
