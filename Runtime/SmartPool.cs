@@ -51,9 +51,14 @@ namespace PEPEngineers.PEPools.Runtime
 		{
 			callbacks?.OnItemReleased(element);
 			if (FreeCount >= maxSize)
+			{
 				callbacks?.OnItemDestroyed(element);
+				factory.Destroy(element);
+			}
 			else
+			{
 				container.Add(element);
+			}
 		}
 
 		public void Clear()

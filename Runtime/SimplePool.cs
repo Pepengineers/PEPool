@@ -66,5 +66,10 @@ namespace PEPEngineers.PEPools.Runtime
 		{
 			return createFactory();
 		}
+
+		void IPoolFactory<TItem>.Destroy(TItem item)
+		{
+			
+		}
 	}
 }

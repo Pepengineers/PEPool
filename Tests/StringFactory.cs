@@ -34,5 +34,10 @@ namespace PEPEngineers.PEPools.Tests
 		{
 			return new string(Guid.NewGuid().ToString());
 		}
+
+		public void Destroy(string item)
+		{
+			
+		}
 	}
 }

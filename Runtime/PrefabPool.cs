@@ -57,7 +57,6 @@ namespace PEPEngineers.PEPools.Runtime
 			void IPoolCallback<TItem>.OnItemDestroyed(in TItem item)
 			{
 				callbackProvider?.OnItemDestroyed(item);
-				Object.Destroy(item.gameObject);
 			}
 
 			void IPoolCallback<TItem>.OnItemCreated(in TItem item)
@@ -80,6 +79,11 @@ namespace PEPEngineers.PEPools.Runtime
 				var item = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
 				item.name = $"{prefab.name} {++count}";
 				return item;
+			}
+
+			void IPoolFactory<TItem>.Destroy(TItem item)
+			{
+				Object.Destroy(item.gameObject);
 			}
 		}
 
