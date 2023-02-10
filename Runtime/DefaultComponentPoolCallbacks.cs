@@ -33,12 +33,12 @@ namespace PEPEngineers.PEPools.Runtime
 			transform.gameObject.SetActive(true);
 		}
 
-		public void OnItemReleased(in TComponent item)
+		public virtual void OnItemReleased(in TComponent item)
 		{
 			ResetItem(item);
 		}
 
-		public void OnItemDestroyed(in TComponent item)
+		public virtual void OnItemDestroyed(in TComponent item)
 		{
                 
 		}
