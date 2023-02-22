@@ -37,7 +37,6 @@ namespace PEPEngineers.PEPools.Tests
 
 		public void Destroy(string item)
 		{
-			
 		}
 	}
 }
