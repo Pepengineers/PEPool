@@ -64,7 +64,7 @@ namespace PEPEngineers.PEPools.Runtime
 		public void Clear()
 		{
 			var count = container.Count;
-			for (var i = count - 1; i >= 0; i++)
+			for (var i = count - 1; i >= 0; i--)
 				callbacks?.OnItemDestroyed(container[i]);
 
 			container.Clear();
