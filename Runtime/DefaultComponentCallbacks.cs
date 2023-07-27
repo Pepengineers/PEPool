@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace PEPEngineers.PEPools.Runtime
 {
-	public class DefaultComponentPoolCallbacks<TComponent> : IPoolCallback<TComponent> where TComponent : Behaviour
+	public class DefaultComponentCallbacks<TComponent> : IPoolCallback<TComponent> where TComponent : Behaviour
 	{
-		public DefaultComponentPoolCallbacks(Transform parent)
+		public DefaultComponentCallbacks(Transform parent)
 		{
 			Parent = parent;
 		}
