@@ -14,7 +14,7 @@ namespace PEPEngineers.PEPools.Runtime
 			int maxSize = PoolConstants.DefaultMaxSize)
 		{
 			createFactory = factory;
-			pool = new SmartPool<TItem>(this, this);
+			pool = new Pool<TItem>(this, this);
 		}
 
 		public Action<TItem> ItemCreated { get; set; } = null;

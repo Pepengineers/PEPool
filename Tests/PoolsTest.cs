@@ -7,13 +7,13 @@ namespace PEPEngineers.PEPools.Tests
 	internal sealed class PoolsTest
 	{
 		private StringFactory factory;
-		private SmartPool<string> pool;
+		private Pool<string> pool;
 
 		[SetUp]
 		public void SetUp()
 		{
 			factory = new StringFactory();
-			pool = new SmartPool<string>(factory, factory);
+			pool = new Pool<string>(factory, factory);
 		}
 
 		[TearDown]

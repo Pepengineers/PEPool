@@ -5,27 +5,27 @@ using PEPEngineers.PEPools.Extensions;
 using PEPEngineers.PEPools.Interfaces;
 using PEPEngineers.PEPools.Settings;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace PEPEngineers.PEPools.Runtime
 {
 	[Serializable]
-	public class SmartPool<T> : IPool<T> where T : class
+	public class Pool<T> : IPool<T> where T : class
 	{
 		[SerializeField] [ReadOnly] private int countAll;
 		[SerializeField] [ReadOnly] private int bucketSize;
-		[SerializeField] [ReadOnly] private List<T> container;
+		[SerializeReference] [ReadOnly] private List<T> freeList;
 		[SerializeField] [ReadOnly] private int maxSize;
 		private readonly IPoolCallback<T> callbacks;
 		private readonly IPoolFactory<T> factory;
 
-		public SmartPool(IPoolFactory<T> factory, IPoolCallback<T> callbacks = null,
+		public Pool(IPoolFactory<T> factory, IPoolCallback<T> callbacks = null,
 			int defaultCapacity = PoolConstants.DefaultBucketSize,
 			int bucketSize = PoolConstants.DefaultBucketSize,
 			int maxSize = PoolConstants.DefaultMaxSize)
 		{
-			if (maxSize <= 0)
-				throw new ArgumentException("Max Size must be greater than 0", nameof(maxSize));
-			container = new List<T>(defaultCapacity);
+			Assert.IsFalse(maxSize <= 0);
+			freeList = new List<T>(defaultCapacity);
 			this.factory = factory;
 			this.callbacks = callbacks;
 			this.maxSize = maxSize;
@@ -35,15 +35,15 @@ namespace PEPEngineers.PEPools.Runtime
 		public int RentedCount => countAll - FreeCount;
 		public int MaxCount => maxSize;
 		public int BucketSize => bucketSize;
-		public int FreeCount => container.Count;
+		public int FreeCount => freeList.Count;
 
 		public T Get()
 		{
 			if (FreeCount == 0) CreateBucket();
 
-			var item = container[0];
+			var item = freeList[0];
 			callbacks?.OnItemRented(item);
-			container.FastRemove(0);
+			freeList.FastRemove(0);
 			return item;
 		}
 
@@ -57,17 +57,17 @@ namespace PEPEngineers.PEPools.Runtime
 			}
 			else
 			{
-				container.Add(element);
+				freeList.Add(element);
 			}
 		}
 
 		public void Clear()
 		{
-			var count = container.Count;
+			var count = freeList.Count;
 			for (var i = count - 1; i >= 0; i--)
-				callbacks?.OnItemDestroyed(container[i]);
+				callbacks?.OnItemDestroyed(freeList[i]);
 
-			container.Clear();
+			freeList.Clear();
 			countAll = 0;
 		}
 
@@ -76,8 +76,8 @@ namespace PEPEngineers.PEPools.Runtime
 			for (var i = 0; i < bucketSize; i++)
 			{
 				var item = factory.Create();
+				freeList.Add(item);
 				callbacks?.OnItemCreated(item);
-				container.Add(item);
 			}
 
 			countAll += bucketSize;

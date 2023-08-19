@@ -1,5 +1,4 @@
 using System;
-using PEPEngineers.PEPools.Attributes;
 using PEPEngineers.PEPools.Interfaces;
 using PEPEngineers.PEPools.Settings;
 using UnityEngine;
@@ -8,70 +7,24 @@ using Object = UnityEngine.Object;
 namespace PEPEngineers.PEPools.Runtime
 {
 	[Serializable]
-	public class PrefabPool<TItem> : IPool<TItem> where TItem : Behaviour
+	public class PrefabPool<TItem> : Pool<TItem> where TItem : Behaviour
 	{
-		[SerializeField] [ReadOnly] private PrefabFactory factory;
-		[SerializeField] [ReadOnly] private ItemPool pool;
-
 		public PrefabPool(TItem prefab, IPoolCallback<TItem> callbackProvider = null,
 			int initialCapacity = PoolConstants.DefaultBucketSize,
+			int bucketSize = PoolConstants.DefaultBucketSize,
 			int initialMaxSize = PoolConstants.DefaultMaxSize)
+			: base(new PrefabFactory(prefab), callbackProvider, initialCapacity, bucketSize, initialMaxSize)
 		{
-			factory = new PrefabFactory(prefab, callbackProvider);
-			pool = new ItemPool(factory, factory, initialCapacity, maxSize: initialMaxSize);
 		}
 
-		public int FreeCount => pool.FreeCount;
-		public int RentedCount => pool.RentedCount;
-		public int MaxCount => pool.MaxCount;
-		public int BucketSize => pool.BucketSize;
-
-		public TItem Get()
+		private sealed class PrefabFactory : IPoolFactory<TItem>
 		{
-			return pool.Get();
-		}
+			private readonly TItem prefab;
+			private uint count = uint.MinValue;
 
-		public void Release(TItem element)
-		{
-			pool.Release(element);
-		}
-
-		public void Clear()
-		{
-			pool.Clear();
-		}
-
-		[Serializable]
-		private sealed class PrefabFactory : IPoolFactory<TItem>, IPoolCallback<TItem>
-		{
-			[SerializeField] [ReadOnly] private TItem prefab;
-			[SerializeField] [ReadOnly] private uint count = uint.MinValue;
-			private readonly IPoolCallback<TItem> callbackProvider;
-
-			public PrefabFactory(TItem prefab, IPoolCallback<TItem> callbackProvider)
+			public PrefabFactory(TItem prefab)
 			{
 				this.prefab = prefab;
-				this.callbackProvider = callbackProvider;
-			}
-
-			void IPoolCallback<TItem>.OnItemDestroyed(in TItem item)
-			{
-				callbackProvider?.OnItemDestroyed(item);
-			}
-
-			void IPoolCallback<TItem>.OnItemCreated(in TItem item)
-			{
-				callbackProvider?.OnItemCreated(item);
-			}
-
-			void IPoolCallback<TItem>.OnItemRented(in TItem item)
-			{
-				callbackProvider?.OnItemRented(item);
-			}
-
-			void IPoolCallback<TItem>.OnItemReleased(in TItem item)
-			{
-				callbackProvider?.OnItemReleased(item);
 			}
 
 			TItem IPoolFactory<TItem>.Create()
@@ -84,18 +37,6 @@ namespace PEPEngineers.PEPools.Runtime
 			void IPoolFactory<TItem>.Destroy(TItem item)
 			{
 				Object.Destroy(item.gameObject);
-			}
-		}
-
-		[Serializable]
-		internal sealed class ItemPool : SmartPool<TItem>
-		{
-			public ItemPool(IPoolFactory<TItem> factory, IPoolCallback<TItem> provider,
-				int defaultCapacity = PoolConstants.DefaultBucketSize,
-				int bucketSize = PoolConstants.DefaultBucketSize, int maxSize = PoolConstants.DefaultMaxSize) : base(
-				factory, provider, defaultCapacity,
-				bucketSize, maxSize)
-			{
 			}
 		}
 	}
