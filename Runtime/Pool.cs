@@ -44,6 +44,7 @@ namespace PEPEngineers.PEPools.Runtime
 			var item = freeList[0];
 			callbacks?.OnItemRented(item);
 			freeList.FastRemove(0);
+			
 			return item;
 		}
 
@@ -64,8 +65,8 @@ namespace PEPEngineers.PEPools.Runtime
 		public void Clear()
 		{
 			var count = freeList.Count;
-			for (var i = count - 1; i >= 0; i--)
-				callbacks?.OnItemDestroyed(freeList[i]);
+			while (count-- > 0) 
+				callbacks?.OnItemDestroyed(freeList[count]);
 
 			freeList.Clear();
 			countAll = 0;
