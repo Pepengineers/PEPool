@@ -12,9 +12,9 @@ namespace PEPEngineers.PEPools.Extensions
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static void FastRemove<T>(this IList<T> list, int index)
 		{
-			Assert.IsTrue(index < 0, "index out of range < 0");
+			Assert.IsFalse(index < 0, "index out of range < 0");
 			var lastIndex = list.Count - 1;
-			Assert.IsTrue(index > lastIndex, "index out of range >= list.Count");
+			Assert.IsFalse(index > lastIndex, "index out of range >= list.Count");
 			list[index] = list[lastIndex];
 			list.RemoveAt(lastIndex);
 		}
